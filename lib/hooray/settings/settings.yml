@@ -1,0 +1,7 @@
+syn_scan: true
+service_scan: true
+os_fingerprint: true
+verbose: true
+
+# network:
+# ports:

@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require 'hooray'
+
+puts
+puts "                             Hooray!"
+puts
+
+Hooray::CLI.start(ARGV)
