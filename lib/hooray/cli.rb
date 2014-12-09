@@ -39,7 +39,7 @@ module Hooray
     LONG
     def list(filter = nil)
       pa "Listing devices * #{filter}", :red
-      tp Seek.new(options[:network], filter).devices, :name, :ip, :mac
+      tp Seek.new(options[:network], filter).nodes, :name, :ip, :mac
     end
 
 

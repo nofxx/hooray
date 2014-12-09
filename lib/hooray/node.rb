@@ -1,5 +1,5 @@
 module Hooray
-  class Device
+  class Node
     attr_accessor :host, :name, :nick, :mac, :ip, :ports
 
     def initialize(params = {})

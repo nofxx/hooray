@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Devicek' do
+describe 'Nodek' do
 
   it 'should have ip' do
   end

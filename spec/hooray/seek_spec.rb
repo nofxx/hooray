@@ -9,7 +9,7 @@ describe 'Seek' do
 
   end
 
-  it 'should find devices' do
+  it 'should find nodes' do
 
   end
 
