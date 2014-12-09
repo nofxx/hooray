@@ -3,60 +3,52 @@ module Hooray
   # Main runner
   #
   class Seek
-    attr_accessor :network, :ports, :opts, :devices
+    attr_accessor :network, :service, :opts, :devices
 
     TMP_FILE = '/tmp/nmap-scan.xml'
     NET_MASK = 24
+    TIMEOUT  = 1
 
-    def initialize(network = nil, ports = nil, opts = {})
-      @devices = []
+    def initialize(network = nil, service = nil,  opts = {})
       @network = network || local_mask
-      @devices = discover.map { |h| Device.new(ip: h) }
-      @ports = ports
+      @service = service
+
+      @devices = ping.sort.map do |n|
+
+        Device.new(ip: n, mac: arp_table[n.to_s]) #, name: find_name(n))
+      end
+    end
+
+    def ping_class
+      return Net::Ping::External unless service
+      service.keys.join =~ /udp/ ? Net::Ping::UDP : Net::Ping::TCP
     end
 
     #
     # fast -> -sn -PA
     #
-    def discover
+    def ping
       scan = []
       bots = []
-      pa "Starting #{Settings.list}  on '#{network}' #{ports}"
+      pa "Starting #{Settings.list}  on '#{network}' #{service}"
       @network.to_range.each do |ip|
         bots << Thread.new do
-          scan << ip if Net::Ping::ICMP.new(ip.to_s, nil, 1).ping?
+          scan << ip if ping_class.new(ip.to_s, service, TIMEOUT).ping?
         end
       end
       bots.each(&:join)
       scan
     end
 
-    def scan(ports)
-      scan = []
-      bots = []
-      pa "Starting #{Settings.list}  on '#{network}' #{ports}"
-      @network.to_range.each do |ip|
-        bots << Thread.new do
-          scan << ip if Net::Ping::TCP.new(ip.to_s, ports, 1).ping?
-        end
+    def arp_table
+      return @arp_table if @arp_table
+      @arp_table ||= {}
+      `arp -n`.split(/\n/).each do |l|
+        ip, _hw, mac, _flag, iface = l.split(/\s+/)
+        # p "#{ip}  #{mac} #{iface}"
+        @arp_table.merge!(ip => mac) if iface
       end
-      bots.each(&:join)
-      scan
-    end
-
-    def parse
-    end
-
-    def find_by_name
-    end
-
-    def find_by_port
-    end
-
-    def find_by_ip
-    end
-
-    def find_by_mac
+      @arp_table
     end
 
     def my_ips

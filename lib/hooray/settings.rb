@@ -28,6 +28,10 @@ module Hooray
         out
       end
 
+      def device(mac)
+        devices[mac.to_sym] || devices[mac.to_s]
+      end
+
       def all
         @all ||= {}
       end

@@ -61,15 +61,6 @@ module Hooray
     def update
     end
 
-    desc 'update', 'updates ssh config files'
-    long_desc <<-LONG
-
-    Updates your config files based on devices.
-
-    LONG
-    def update
-    end
-
     desc 'local', 'local port status'
     long_desc <<-LONG
 
