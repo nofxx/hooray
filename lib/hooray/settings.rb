@@ -4,7 +4,7 @@ module Hooray
     CONFIG_DIR = ENV['HOME'] + '/.hooray/'
 
     class << self
-      attr_accessor :all, :services, :devices, :macs
+      attr_accessor :all
 
       def no_config_folder
         puts "No config folder, run `#{$PROGRAM_NAME} init`"
@@ -13,6 +13,7 @@ module Hooray
       end
 
       def load!
+        puts "Loading #{CONFIG_DIR}"
         no_config_folder unless Dir.exist?(CONFIG_DIR)
         @all = YAML.load_file(CONFIG_DIR + 'settings.yml')
         @services = YAML.load_file(CONFIG_DIR + 'services.yml')
@@ -37,15 +38,27 @@ module Hooray
         out
       end
 
+      def devices
+        @devices ||= {}
+      end
+
       def device(mac)
-        devices ||= {}
         devices[mac.to_sym] || devices[mac.to_s]
       end
 
-      def family(mac)
-        prefix = mac.to_s.gsub(':', '')[0, 6].upcase
-        macs[prefix]
+      def services
+        @services ||= {}
       end
+
+      def manufacturers
+        @macs || {}
+      end
+
+      def manufacturer(mac)
+        prefix = mac.to_s.gsub(':', '')[0, 6].upcase
+        manufacturers[prefix]
+      end
+      alias_method :family, :manufacturer
 
       def all
         @all ||= {}

@@ -7,20 +7,20 @@ module Hooray
       @ip = params[:ip]
       @mac = params[:mac]
       @mac ||= Mac.addr if @ip == Seek.my_lan_ip
-      set_name
+      @name = params[:name] || find_name
     end
 
-    def set_name
+    def find_name
       return unless mac
-      if [Mac.addr].flatten.include?(mac)
-        @name = Socket.gethostname
+      if [Mac.addr].flatten.include?(mac) # Hack until macaddr get fix
+        Socket.gethostname
       else
-        @name = Settings.device(mac) || Settings.family(mac)
+        Settings.device(mac) || Settings.manufacturer(mac)
       end
     end
 
     def to_ip
-      Addrinfo.ip(ip)
+      IPAddr.new(ip)
     end
 
     def <=>(other)
