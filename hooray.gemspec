@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.email       = 'x@nofxx.com'
   s.license     = 'MIT'
 
+  s.executables = ['hoo']
+
   s.files = Dir.glob('{lib,spec}/**/*') + %w(README.md Rakefile)
   s.require_path = 'lib'
 
