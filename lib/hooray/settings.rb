@@ -1,11 +1,10 @@
 module Hooray
-
+  # App settings
   class Settings
-
     CONFIG_DIR = ENV['HOME'] + '/.hooray/'
 
     class << self
-      attr_accessor :all, :services, :devices
+      attr_accessor :all, :services, :devices, :macs
 
       def no_config_folder
         puts "No config folder, run `#{$PROGRAM_NAME} init`"
@@ -15,9 +14,15 @@ module Hooray
 
       def load!
         no_config_folder unless Dir.exist?(CONFIG_DIR)
-        @all = YAML.load_file(CONFIG_DIR + "settings.yml")
-        @services = YAML.load_file(CONFIG_DIR + "services.yml")
-        @devices  = YAML.load_file(CONFIG_DIR + "devices.yml")
+        @all = YAML.load_file(CONFIG_DIR + 'settings.yml')
+        @services = YAML.load_file(CONFIG_DIR + 'services.yml')
+        @devices  = YAML.load_file(CONFIG_DIR + 'devices.yml')
+        @macs = {}
+        File.read(CONFIG_DIR + 'nmap-mac-prefixes').each_line do |line|
+          next if line =~ /^\s*#/
+          prefix, *name = *line.split(/\s/)
+          @macs.store(prefix, name.join(' '))
+        end
       end
 
       def list
@@ -30,6 +35,11 @@ module Hooray
 
       def device(mac)
         devices[mac.to_sym] || devices[mac.to_s]
+      end
+
+      def family(mac)
+        prefix = mac.to_s.gsub(':', '')[0,6].upcase
+        macs[prefix]
       end
 
       def all

@@ -3,7 +3,6 @@ module Hooray
   # Main runner
   #
   class Scan < Struct.new(:target, :ports, :opts)
-
     def run
       scan = []
       bots = []
@@ -16,8 +15,5 @@ module Hooray
       bots.each(&:join)
       scan
     end
-
-
   end
-
 end

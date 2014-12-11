@@ -4,7 +4,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'hooray'
 
 puts
-puts "                             Hooray!"
-puts
+puts '                             Hooray!'
 
 Hooray::CLI.start(ARGV)

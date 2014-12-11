@@ -13,5 +13,4 @@ describe 'Seek' do
 
   end
 
-
 end

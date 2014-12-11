@@ -1,7 +1,6 @@
 require 'thor'
 
 module Hooray
-
   # Nice cli
   class CLI < Thor
     class_option :verbose, type: :boolean, aliases: :v
@@ -11,6 +10,7 @@ module Hooray
       super
       return if ARGV.first =~ /init/
       Settings.load!
+      @start = Time.now
     end
 
     desc 'init', 'creates settings on ~'
@@ -21,15 +21,14 @@ module Hooray
     LONG
     def init
       return if Dir.exist?(Settings::CONFIG_DIR)
-      pa "Creating ~/.hooray directory", :red
+      pa 'Creating ~/.hooray directory', :red
       Dir.mkdir(Settings::CONFIG_DIR)
       settings_dir = File.join(File.dirname(__FILE__), 'settings')
-      %w{ settings devices services }.each do |file|
+      %w(settings devices services).each do |file|
         pa "Creating ~/.hooray/#{file}.yml", :red
         FileUtils.cp "#{settings_dir}/#{file}.yml", Settings::CONFIG_DIR
       end
     end
-
 
     desc 'list FILTER', 'list and apply FILTER'
     long_desc <<-LONG
@@ -37,11 +36,10 @@ module Hooray
     Lists out all devices connected to the current network.
 
     LONG
-    def list(filter = nil)
+    def list(*filter)
       pa "Listing devices * #{filter}", :red
-      tp Seek.new(options[:network], filter).nodes, :name, :ip, :mac
+      print_table Seek.new(options[:network], *filter).nodes
     end
-
 
     desc 'watch FILTER', 'watch in realtime  FILTER'
     long_desc <<-LONG
@@ -50,6 +48,16 @@ module Hooray
 
     LONG
     def watch
+      print_table old_seek = Seek.new(options[:network]).nodes
+      pa "Starting watch...", :red
+      loop do
+        sleep 5
+        new_seek = Seek.new(options[:network]).nodes
+        print_change :new, (new_seek - old_seek)
+        print_change :old, (old_seek - new_seek), :red
+        old_seek = new_seek
+        # binding.pry
+      end
     end
 
     desc 'update', 'updates ssh config files'
@@ -73,9 +81,22 @@ module Hooray
 
     private
 
-    def debug message
+    def debug(message)
       return unless options[:verbose]
       say message
+    end
+
+    def print_change(txt, changes, color = :blue)
+      return if changes.empty?
+      pa "#{txt.to_s.capitalize} nodes @ #{Time.now}", color
+      tp changes, :name, :ip, :mac
+    end
+
+    def print_table(nodes)
+      tp nodes, :name, :ip, :mac
+      puts "---"
+      took = (Time.now - @start).round(2)
+      pa "#{nodes.count} devices @ #{Time.now} #{took}s", '#777', :bold
     end
 
     def method_missing(*params)
