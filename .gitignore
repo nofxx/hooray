@@ -1,9 +1,8 @@
 .DS_Store
 coverage
 rdoc
-doc
-*.gem
 pkg
-.idea
 .bundle
 Gemfile.lock
+*.gem
+*.log
