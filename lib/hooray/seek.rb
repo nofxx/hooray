@@ -20,7 +20,7 @@ module Hooray
         Node.new(ip: n, mac: arp_table[n.to_s]) # , name: find_name(n))
       end
     end
-    alias_method :nodes, :devices
+    alias_method :devices, :nodes
 
     def ping_class
       return Net::Ping::External unless @protocol
