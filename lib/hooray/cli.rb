@@ -49,7 +49,7 @@ module Hooray
     LONG
     def watch
       print_table old_seek = Seek.new(options[:network]).nodes
-      pa "Starting watch...", :red
+      pa 'Starting watch...', :red
       loop do
         sleep 5
         new_seek = Seek.new(options[:network]).nodes
@@ -94,7 +94,7 @@ module Hooray
 
     def print_table(nodes)
       tp nodes, :name, :ip, :mac
-      puts "---"
+      puts '---'
       took = (Time.now - @start).round(2)
       pa "#{nodes.count} devices @ #{Time.now} #{took}s", '#777', :bold
     end
@@ -105,7 +105,7 @@ module Hooray
         puts "Do you want to `#{params.first}` to a device?"
         puts "Use #{ARGV.first} #{params.first} <device name>"
       when 2 then
-        command, device = *params
+        command, *device = *params
         system "#{command} "
       else super
       end

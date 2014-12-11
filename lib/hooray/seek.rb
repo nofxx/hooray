@@ -64,7 +64,6 @@ module Hooray
     end
 
     class << self
-
       def my_ips
         Socket.ip_address_list.select do |ip|
           ip.ipv4_private? && !ip.ipv4_loopback?

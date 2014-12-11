@@ -17,6 +17,10 @@ module Hooray
         @all = YAML.load_file(CONFIG_DIR + 'settings.yml')
         @services = YAML.load_file(CONFIG_DIR + 'services.yml')
         @devices  = YAML.load_file(CONFIG_DIR + 'devices.yml')
+        read_mac_prefixes
+      end
+
+      def read_mac_prefixes
         @macs = {}
         File.read(CONFIG_DIR + 'nmap-mac-prefixes').each_line do |line|
           next if line =~ /^\s*#/
@@ -39,7 +43,7 @@ module Hooray
       end
 
       def family(mac)
-        prefix = mac.to_s.gsub(':', '')[0,6].upcase
+        prefix = mac.to_s.gsub(':', '')[0, 6].upcase
         macs[prefix]
       end
 
