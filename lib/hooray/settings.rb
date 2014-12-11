@@ -34,6 +34,7 @@ module Hooray
       end
 
       def device(mac)
+        devices ||= {}
         devices[mac.to_sym] || devices[mac.to_s]
       end
 
