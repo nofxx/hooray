@@ -24,9 +24,9 @@ module Hooray
       pa 'Creating ~/.hooray directory', :red
       Dir.mkdir(Settings::CONFIG_DIR)
       settings_dir = File.join(File.dirname(__FILE__), 'settings')
-      %w(settings devices services).each do |file|
-        pa "Creating ~/.hooray/#{file}.yml", :red
-        FileUtils.cp "#{settings_dir}/#{file}.yml", Settings::CONFIG_DIR
+      %w(settings.yml devices.yml services.yml nmap-mac-prefixes).each do |file|
+        pa "Creating ~/.hooray/#{file}", :red
+        FileUtils.cp "#{settings_dir}/#{file}", Settings::CONFIG_DIR
       end
     end
 
