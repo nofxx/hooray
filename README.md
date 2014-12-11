@@ -7,6 +7,8 @@ Find devices around you.
 hoo list
 ```
 ```
+NAME                        | IP            | MAC
+----------------------------|---------------|------------------
 Motorola Mobility           | 192.168.1.70  | 34:bb:XX:XX:XX:XX
 Giga-byte Technology Co.    | 192.168.1.71  | 94:de:XX:XX:XX:XX
 Veih's Android              | 192.168.1.72  | 04:46:XX:XX:XX:XX
@@ -25,7 +27,9 @@ Find running services:
 hoo list web
 ```
 ```
-nofxx desktop               | 192.168.1.77  | 64:a3:XX:XX:XX:XX
+NAME              | IP           | MAC
+------------------|--------------|------------------
+nofxx desktop     | 192.168.1.77 | 64:a3:XX:XX:XX:XX
 ```
 
 Or simply by ports:
