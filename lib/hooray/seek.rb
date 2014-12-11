@@ -48,12 +48,16 @@ module Hooray
       scan
     end
 
+    #
+    # ARP Table reader
+    #
     def arp_table
       return @arp_table if @arp_table
       @arp_table ||= {}
-      `arp -n`.split(/\n/).each do |l|
-        ip, _hw, mac, _flag, iface = l.split(/\s+/)
-        # p "#{ip}  #{mac} #{iface}"
+      `arp -na`.split(/\n/).each do |l|
+        _q, ip, _at, mac, *iface = l.split(/\s+/)
+        next unless mac =~ /:\w{2}:/
+        ip = ip[1..-2] # (ip) -> ip
         @arp_table.merge!(ip => mac) if iface
       end
       @arp_table
@@ -61,19 +65,19 @@ module Hooray
 
     class << self
 
-    def my_ips
-      Socket.ip_address_list.select do |ip|
-        ip.ipv4_private? && !ip.ipv4_loopback?
+      def my_ips
+        Socket.ip_address_list.select do |ip|
+          ip.ipv4_private? && !ip.ipv4_loopback?
+        end
       end
-    end
 
-    def my_lan_ip
-      IPAddr.new(my_ips.first.ip_address)
-    end
+      def my_lan_ip
+        IPAddr.new(my_ips.first.ip_address)
+      end
 
-    def local_mask
-      my_lan_ip.mask(NET_MASK)
-    end
+      def local_mask
+        my_lan_ip.mask(NET_MASK)
+      end
     end
   end
 end
