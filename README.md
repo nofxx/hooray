@@ -24,10 +24,11 @@ LG Electronics              | 192.168.1.79  | cc:fa:XX:XX:XX:XX
 TP-Link                     | 192.168.1.253 | f8:d1:XX:XX:XX:XX
 Siemens Subscriber Networks | 192.168.1.254 | 00:0b:XX:XX:XX:XX
 ---
-8 devices @ 2014-12-11 13:32:04 -0200 2.85s
+8 devices @ 2014-12-11 13:32:04 -0200 2.27s
 ```
 
-Find running services:
+
+## Find running services
 
 ```
 hoo list web
@@ -35,7 +36,11 @@ hoo list web
 ```
 NAME              | IP           | MAC
 ------------------|--------------|------------------
+dsl modem         | 192.168.1.1  | 64:a3:XX:XX:XX:XX
+test server       | 192.168.1.75 | 64:a3:XX:XX:XX:XX
 nofxx desktop     | 192.168.1.77 | 64:a3:XX:XX:XX:XX
+---
+3 devices @ 2014-12-11 19:23:11 -0200 1.10s
 ```
 
 Or simply by ports:
@@ -46,7 +51,7 @@ hoo list 80
 hoo list 6777 udp
 ```
 
-Monitor:
+## Monitor
 
 ```
 hoo watch
@@ -58,12 +63,21 @@ NAME         | IP           | MAC
 iPhone nofxx | 192.168.1.76 | 64:a3:XX:XX:XX:XX
 ```
 
-Use as a lib:
+
+## Use as a lib
+
 ```
 require 'hooray'
 Hooray::Seek.lan(port, protocol).devices
 Hooray::Seek.new(network, port, protocol).devices
 ```
+
+* Nil port means ICMP ping.
+* Protocol always defaults to :tcp.
+* Network defaults to LAN IP 24 bits masked.
+
+Possible protocols: tcp, udp, http, wmi & icmp (requires root).
+
 
 ## Why?
 

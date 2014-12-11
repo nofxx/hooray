@@ -10,17 +10,33 @@ module Hooray
 
     def initialize(network = nil, *params)
       @network = network || Seek.local_mask
+      set_query(params)
+      set_nodes
+    end
+    alias_method :devices, :nodes
+
+    #
+    # Form need params based on user input
+    #
+    def set_query(params)
       unless params.empty?
         ports, words = params.flatten.partition { |s| s =~ /\d+/ }
         @ports = ports.map(&:to_i).first # TODO
         @protocol = words.select { |w| w =~ /udp|tcp/ }.join
       end
+    end
 
+    #
+    # Map results to @nodes << Node.new()
+    #
+    # BUG: sometimes ping returns true
+    # When you run list consecutively. Pretty weird!
+    # So we need to remove those without mac
+    def set_nodes
       @nodes = ping.sort.map do |n|
         Node.new(ip: n, mac: arp_table[n.to_s]) # , name: find_name(n))
-      end
+      end.reject { |n| n.mac.nil? } # remove those without mac
     end
-    alias_method :devices, :nodes
 
     def ping_class
       return Net::Ping::External unless @protocol
