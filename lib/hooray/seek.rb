@@ -19,11 +19,10 @@ module Hooray
     # Form need params based on user input
     #
     def set_query(params)
-      unless params.empty?
-        ports, words = params.flatten.partition { |s| s =~ /\d+/ }
-        @ports = ports.map(&:to_i).first # TODO
-        @protocol = words.select { |w| w =~ /udp|tcp/ }.join
-      end
+      return if params.empty?
+      ports, words = params.flatten.partition { |s| s =~ /\d+/ }
+      @ports = ports.map(&:to_i).first # TODO
+      @protocol = words.select { |w| w =~ /udp|tcp/ }.join
     end
 
     #

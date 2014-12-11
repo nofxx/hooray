@@ -105,8 +105,10 @@ module Hooray
         puts "Do you want to `#{params.first}` to a device?"
         puts "Use #{ARGV.first} #{params.first} <device name>"
       when 2 then
-        command, *device = *params
-        system "#{command} "
+        command, name = params
+        device = Hooray::Seek.new.devices.find { |d| d.name == name }
+        return puts("Could not find '#{name}'") unless device
+        system "#{command} #{device.ip}"
       else super
       end
     end

@@ -58,10 +58,21 @@ hoo watch
 ```
 ```
 New nodes @ 2014-12-11 13:53:06 -0200
-NAME         | IP           | MAC
--------------|--------------|------------------
-iPhone nofxx | 192.168.1.76 | 64:a3:XX:XX:XX:XX
+NAME       | IP           | MAC
+-----------|--------------|------------------
+myphone    | 192.168.1.76 | 64:a3:XX:XX:XX:XX
 ```
+
+
+## Use another program
+
+```
+hoo ssh myphone
+```
+
+Will execute: `ssh <ip of myphone>`
+
+You can use any program, not just ssh.
 
 
 ## Use as a lib
