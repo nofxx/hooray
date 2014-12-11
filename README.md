@@ -89,3 +89,7 @@ services.yml regex list ports to names you recognize.
 
 * Ruby net-ping gem.
 * Nmap`s mac precompiled prefixes.
+
+
+Hooray should work on UNIX based systems.
+Tested in Linux and OS X.
