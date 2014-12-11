@@ -76,7 +76,7 @@ module Hooray
 
     LONG
     def local
-      Kernel.system 'netstat -na | grep "tcp.*LISTEN"'
+      Kernel.system 'LANG=en netstat -na | grep "tcp.*LISTEN"'
     end
 
     private
