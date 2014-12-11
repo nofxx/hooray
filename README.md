@@ -1,7 +1,13 @@
 Hooray
 ======
 
-Find devices around you.
+Find devices around you. Fast and without hyphens.
+
+    gem install hooray
+
+
+And use the executable `hoo`:
+
 
 ```
 hoo list
