@@ -7,13 +7,12 @@ module Hooray
       attr_accessor :all
 
       def no_config_folder
-        puts "No config folder, run `#{$PROGRAM_NAME} init`"
+        pa "No config folder, run `#{$PROGRAM_NAME} init`", :red
         puts
         exit 1
       end
 
       def load!
-        puts "Loading #{CONFIG_DIR}"
         no_config_folder unless Dir.exist?(CONFIG_DIR)
         @all = YAML.load_file(CONFIG_DIR + 'settings.yml')
         @services = YAML.load_file(CONFIG_DIR + 'services.yml')
