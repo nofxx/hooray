@@ -9,6 +9,7 @@ require 'paint/pa'
 require 'table_print'
 
 require 'hooray/settings'
+require 'hooray/local'
 require 'hooray/node'
 require 'hooray/port'
 require 'hooray/seek'
