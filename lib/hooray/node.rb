@@ -8,6 +8,8 @@ module Hooray
       @mac = params[:mac]
       @mac ||= Mac.addr if @ip == Seek.my_lan_ip
       @name = params[:name] || find_name
+      return unless params[:ports]
+      @ports = params[:ports].reject(&:nil?).map { |n| Hooray::Port.new(n) }
     end
 
     def find_name
@@ -17,6 +19,10 @@ module Hooray
       else
         Settings.device(mac) || Settings.manufacturer(mac)
       end
+    end
+
+    def ports
+      @ports.sort.map(&:number).join(', ')
     end
 
     def to_ip

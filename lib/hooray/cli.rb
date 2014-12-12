@@ -37,8 +37,12 @@ module Hooray
 
     LONG
     def list(*filter)
-      pa "Listing devices * #{filter}", :red
-      print_table Seek.new(options[:network], *filter).nodes
+      if (nodes = Seek.new(options[:network], *filter).nodes).empty?
+        pa "No results for filter #{filter.join(' ')}", :red
+      else
+        print_table(nodes)
+      end
+      puts
     end
 
     desc 'watch FILTER', 'watch in realtime  FILTER'
@@ -93,10 +97,16 @@ module Hooray
     end
 
     def print_table(nodes)
-      tp nodes, :name, :ip, :mac
+      return if nodes.empty?
+      if nodes.first.ports.empty?
+        tp nodes, :name, :ip, :mac
+      else
+        tp nodes, :name, :ip, :mac, :ports
+      end
       puts '---'
       took = (Time.now - @start).round(2)
-      pa "#{nodes.count} devices @ #{Time.now} #{took}s", '#777', :bold
+      count_plural = nodes.size > 1 ? 's' : ''
+      pa "#{nodes.count} device#{count_plural} @ #{Time.now} #{took}s", '#777', :bold
     end
 
     def method_missing(*params)

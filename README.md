@@ -49,6 +49,7 @@ Or simply by ports:
 ```
 hoo list 80
 hoo list 6777 udp
+hoo list 3000 4000 5000
 ```
 
 ## Monitor
