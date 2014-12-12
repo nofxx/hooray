@@ -4,12 +4,17 @@ module Hooray
     attr_accessor :host, :name, :nick, :mac, :ip, :ports
 
     def initialize(params = {})
-      @ip = params[:ip]
+      self.ip = params[:ip]
       @mac = params[:mac]
       @mac ||= Mac.addr if @ip == Hooray::Local.lan_ip
       @name = params[:name] || find_name
       return unless params[:ports]
       @ports = params[:ports].reject(&:nil?).map { |n| Hooray::Port.new(n) }
+    end
+
+    def ip=(param)
+      return unless param
+      @ip = param.is_a?(IPAddr) ? param : IPAddr.new(param)
     end
 
     def find_name
@@ -23,10 +28,6 @@ module Hooray
 
     def ports
       @ports.sort.map(&:number).join(', ')
-    end
-
-    def to_ip
-      IPAddr.new(ip)
     end
 
     def <=>(other)

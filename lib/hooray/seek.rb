@@ -76,6 +76,5 @@ module Hooray
       puts
       @scan.reject! { |_k, v| v.empty? }
     end
-
   end
 end

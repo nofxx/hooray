@@ -7,9 +7,8 @@ describe 'Node' do
   end
 
   it 'should have a #to_ip' do
-    expect(Node.new(ip: '10.1.1.1').to_ip).to be_a(IPAddr)
+    expect(Node.new(ip: '10.1.1.1').ip).to be_a(IPAddr)
   end
-
 
   it 'should have mac address' do
     expect(Node.new(mac: 'aa:cc:dd:ee:ff:gg').mac).to eq('aa:cc:dd:ee:ff:gg')
@@ -20,11 +19,9 @@ describe 'Node' do
   end
 
   it 'should have ports' do
-
   end
 
   it 'should have hoops' do
-
   end
 
 end
