@@ -104,9 +104,14 @@ module Hooray
         tp nodes, :name, :ip, :mac, :ports
       end
       puts '---'
+      summary(nodes)
+    end
+
+    def summary(nodes)
       took = (Time.now - @start).round(2)
-      count_plural = nodes.size > 1 ? 's' : ''
-      pa "#{nodes.count} device#{count_plural} @ #{Time.now} #{took}s", '#777', :bold
+      message = "#{nodes.count} device"
+      message += 's' if  nodes.size > 1
+      pa "#{message} @ #{Time.now} #{took}s", '#777', :bold
     end
 
     def method_missing(*params)

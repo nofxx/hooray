@@ -11,7 +11,6 @@ describe 'Seek' do
   end
 
   describe 'Query' do
-
     it 'should default to ICMP without port' do
       expect(Seek.new('').ping_class).to eq(Net::Ping::External)
     end
@@ -27,6 +26,5 @@ describe 'Seek' do
     it 'should accept protocol with port' do
       expect(Seek.new('', '80', 'udp').ping_class).to eq(Net::Ping::UDP)
     end
-
   end
 end

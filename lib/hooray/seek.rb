@@ -42,6 +42,8 @@ module Hooray
     end
     alias_method :devices, :nodes
 
+    #
+    # Decide how to ping
     def ping_class
       return Net::Ping::External unless ports
       if @words && @words.join =~ /tcp|udp|http|wmi/
@@ -53,6 +55,8 @@ module Hooray
       end
     end
 
+    #
+    # Creates a bot per port on IP
     def scan_bot(ip)
       (ports || [nil]).each do |port|
         @bots << Thread.new do
