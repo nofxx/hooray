@@ -8,16 +8,18 @@ Gem::Specification.new do |s|
   s.version     = Hooray::VERSION
 
   s.authors     = ['Marcos Piccinini']
-  s.description = 'Find all those devices connected in LAN'
   s.homepage    = 'http://github.com/nofxx/hooray'
-  s.summary     = 'Find devices connected in LAN'
   s.email       = 'x@nofxx.com'
+  s.description = 'Find all those devices connected in LAN'
+  s.summary     = 'Find devices connected in LAN'
   s.license     = 'MIT'
 
   s.executables = ['hoo']
+  s.default_executable = 'hoo'
 
-  s.files = Dir.glob('{lib,spec}/**/*') + %w(README.md Rakefile)
-  s.require_path = 'lib'
+  s.files = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.require_paths = ["lib"]
 
   s.add_dependency 'thor'
   s.add_dependency 'paint'
