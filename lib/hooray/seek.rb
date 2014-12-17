@@ -25,9 +25,11 @@ module Hooray
 
     def config_filters(params)
       return if params.empty?
+      params.map! { |o| Settings.service(o) || o }
       numbers, @words = params.flatten.partition { |s| s =~ /\d+/ }
       @ports = numbers.map(&:to_i)
     end
+
     #
     # Map results to @nodes << Node.new()
     #
@@ -77,7 +79,6 @@ module Hooray
         scan_bot(ip)
       end
       @bots.each(&:join)
-      puts
       @scan.reject! { |_k, v| v.empty? }
     end
   end

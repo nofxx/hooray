@@ -37,12 +37,16 @@ module Hooray
         out
       end
 
-      def devices
-        @devices ||= {}
-      end
-
       def device(mac)
         devices[mac.to_sym] || devices[mac.to_s]
+      end
+
+      def service(name)
+        services[name.to_sym] || devices[name.to_s]
+      end
+
+      def devices
+        @devices ||= {}
       end
 
       def services

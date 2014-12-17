@@ -1,11 +1,7 @@
 # Services List
 #
-# protocol:
-#   port: name
+# name: PORT <tcp>
 #
-tcp:
-  3000: Rails Dev
-  27017..27030: Mongos
-
-udp:
-  777: Jackpot Machines
+rails: 3000
+mongos: 27017..27027
+jackpot: 777 udp
