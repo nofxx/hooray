@@ -2,7 +2,7 @@ require 'thor'
 
 module Hooray
   # Nice cli
-  class CLI < Thor
+  class CLI < Thor # rubocop:disable Metrics/ClassLength
     class_option :verbose, type: :boolean, aliases: :v
     class_option :network, type: :string, aliases: :n
 
@@ -37,13 +37,19 @@ module Hooray
 
     LONG
     def list(*filter)
-      if (nodes = Seek.new(options[:network], *filter).nodes).empty?
+      puts sweep = Seek.new(options[:network], *filter)
+      if sweep.nodes.empty?
         pa "No results for filter #{filter.join(' ')}", :red
       else
-        print_table(nodes)
+        print_table(sweep.nodes)
       end
       puts
     end
+    # no_commands do
+    #   alias_method :lsit, :list
+    #   alias_method :lits, :list
+    #   alias_method :all, :list
+    # end
 
     desc 'watch FILTER', 'watch in realtime  FILTER'
     long_desc <<-LONG
@@ -98,6 +104,7 @@ module Hooray
 
     def print_table(nodes)
       return if nodes.empty?
+      puts
       if nodes.first.ports.empty?
         tp nodes, :name, :ip, :mac
       else

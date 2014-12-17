@@ -7,6 +7,7 @@ module Hooray
 
     NET_MASK = 24
     TIMEOUT  = 1
+    RANGE_REGEX = /\.{2,3}/
 
     def initialize(network = nil, *params)
       @scan = {}
@@ -15,32 +16,31 @@ module Hooray
       config_filters params
     end
 
-    def config_network(param)
-      if param && !param.empty?
-        @network = IPAddr.new(param)
-      else
-        @network = Hooray::Local.mask
-      end
+    def config_network(str)
+      @network = str && !str.empty? ? IPAddr.new(str) : Hooray::Local.mask
     end
 
     def config_filters(params)
       return if params.empty?
+      # Map services 'foo' -> 3000 udp
       params.map! { |o| Settings.service(o) || o }
-      numbers, @words = params.flatten.partition { |s| s =~ /\d+/ }
-      @ports = numbers.map(&:to_i)
+      # Map Ranges 1..3 -> [1,2,3]
+      params.map! do |o|
+        next o unless o =~ RANGE_REGEX
+        Range.new(*o.split(RANGE_REGEX)).to_a
+      end
+      numbers, words = params.flatten.partition { |s| s.to_s =~ /\d+/ }
+      @ports, @protocol = numbers.map(&:to_i), words.join
     end
 
     #
     # Map results to @nodes << Node.new()
     #
-    # BUG: sometimes ping returns true
-    # When you run list consecutively. Pretty weird!
-    # So we need to remove those without mac
     def nodes
       return @nodes if @nodes
       @nodes = sweep.map do |k, v|
         Node.new(ip: k, mac: Hooray::Local.arp_table[k.to_s], ports: v)
-      end.reject { |n| n.mac.nil? } # remove those without mac
+      end # .reject { |n| n.mac.nil? } # remove those without mac
     end
     alias_method :devices, :nodes
 
@@ -48,13 +48,8 @@ module Hooray
     # Decide how to ping
     def ping_class
       return Net::Ping::External unless ports
-      if @words && @words.join =~ /tcp|udp|http|wmi/
-        Net::Ping.const_get(@words.join.upcase)
-      else
-        Net::Ping::TCP
-        # elsif (serv = Settings.service(@words.join))
-        # @ports = serv.values
-      end
+      return Net::Ping::TCP unless @protocol =~ /tcp|udp|http|wmi/
+      Net::Ping.const_get(@protocol.upcase)
     end
 
     #
@@ -80,6 +75,10 @@ module Hooray
       end
       @bots.each(&:join)
       @scan.reject! { |_k, v| v.empty? }
+    end
+
+    def to_s
+      "Seek #{network} #{ports}"
     end
   end
 end

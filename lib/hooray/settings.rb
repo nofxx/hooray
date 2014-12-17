@@ -42,7 +42,7 @@ module Hooray
       end
 
       def service(name)
-        services[name.to_sym] || devices[name.to_s]
+        services[name.to_sym] || services[name.to_s]
       end
 
       def devices
