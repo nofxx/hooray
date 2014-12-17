@@ -24,7 +24,7 @@ LG Electronics              | 192.168.1.79  | cc:fa:XX:XX:XX:XX
 TP-Link                     | 192.168.1.253 | f8:d1:XX:XX:XX:XX
 Siemens Subscriber Networks | 192.168.1.254 | 00:0b:XX:XX:XX:XX
 ---
-8 devices @ 2014-12-11 13:32:04 -0200 2.27s
+8 nodes @ 2014-12-11 13:32:04 -0200 2.27s
 ```
 
 
@@ -40,7 +40,7 @@ dsl modem         | 192.168.1.1  | 64:a3:XX:XX:XX:XX
 test server       | 192.168.1.75 | 64:a3:XX:XX:XX:XX
 nofxx desktop     | 192.168.1.77 | 64:a3:XX:XX:XX:XX
 ---
-3 devices @ 2014-12-11 19:23:11 -0200 1.10s
+3 nodes @ 2014-12-11 19:23:11 -0200 1.10s
 ```
 
 Or simply by ports:
@@ -80,8 +80,8 @@ You can use any program, not just ssh.
 
 ```
 require 'hooray'
-Hooray::Seek.lan(port, protocol).devices
-Hooray::Seek.new(network, port, protocol).devices
+Hooray::Seek.lan(port, protocol).nodes
+Hooray::Seek.new(network, port, protocol).nodes
 ```
 
 * Nil port means ICMP ping.
@@ -93,8 +93,8 @@ Possible protocols: tcp, udp, http, wmi & icmp (requires root).
 
 ## Why?
 
-Bind macs or fix IP's is also boring and a per device work.
-As more we use wifi/ethernet devices in our company, nmap gets boring.
+Bind macs or fix IP's is also boring and a per device/node work.
+As more we use connected (IoT) devices in our company, nmap gets boring.
 Not to mention slow, there's no easy way to assign names to devices I know,
 which makes OS scan/port scan a needed option most times (thus making it slower).
 Also (please open a issue if you know how) even in fast mode nmap won't run in under 2s.
