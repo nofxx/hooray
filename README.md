@@ -1,6 +1,8 @@
 Hooray
 ======
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nofxx/hooray?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Find devices around you. Fast and without hyphens.
 
     gem install hooray
