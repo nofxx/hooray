@@ -6,6 +6,7 @@ require 'hooray/version'
 Gem::Specification.new do |s|
   s.name        = 'hooray'
   s.version     = Hooray::VERSION
+  s.platform    = Gem::Platform::RUBY
 
   s.authors     = ['Marcos Piccinini']
   s.homepage    = 'http://github.com/nofxx/hooray'
