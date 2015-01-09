@@ -15,19 +15,21 @@ And use the executable `hoo`:
 hoo list
 ```
 ```
-NAME                        | IP            | MAC
-----------------------------|---------------|------------------
-Motorola Mobility           | 192.168.1.70  | 34:bb:XX:XX:XX:XX
-Giga-byte Technology Co.    | 192.168.1.71  | 94:de:XX:XX:XX:XX
-Veih's Android              | 192.168.1.72  | 04:46:XX:XX:XX:XX
-Nery's LG                   | 192.168.1.73  | cc:fa:XX:XX:XX:XX
-nofxx's iPhone              | 192.168.1.77  | 64:a3:XX:XX:XX:XX
-LG Electronics              | 192.168.1.79  | cc:fa:XX:XX:XX:XX
-TP-Link                     | 192.168.1.253 | f8:d1:XX:XX:XX:XX
-Siemens Subscriber Networks | 192.168.1.254 | 00:0b:XX:XX:XX:XX
+NAME                        | IP         | MAC
+----------------------------|------------|------------------
+Motorola Mobility           | 10.1.1.70  | 34:bb:XX:XX:XX:XX
+Giga-byte Technology Co.    | 10.1.1.71  | 94:de:XX:XX:XX:XX
+Veih's Android              | 10.1.1.72  | 04:46:XX:XX:XX:XX
+Nery's LG                   | 10.1.1.73  | cc:fa:XX:XX:XX:XX
+nofxx's iPhone              | 10.1.1.77  | 64:a3:XX:XX:XX:XX
+LG Electronics              | 10.1.1.79  | cc:fa:XX:XX:XX:XX
+TP-Link                     | 10.1.1.253 | f8:d1:XX:XX:XX:XX
+Siemens Subscriber Networks | 10.1.1.254 | 00:0b:XX:XX:XX:XX
 ---
-8 nodes @ 2014-12-11 13:32:04 -0200 2.27s
+8 nodes @ 2015-01-08 00:33:07 -0200 1.27s
 ```
+
+**That's the idea: 1 second to find a device.**
 
 
 ## Find running services
