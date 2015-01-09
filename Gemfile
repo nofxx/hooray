@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'pry'
-gem 'coveralls'
 gem 'rake'
 gem 'rspec', '>= 3'
 gem 'rubocop'
