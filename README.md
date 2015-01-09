@@ -1,4 +1,8 @@
 # Hooray
+[![Gem Version](https://badge.fury.io/rb/hooray.png)](http://badge.fury.io/rb/hooray)
+[![Code Climate](https://codeclimate.com/github/nofxx/hooray.png)](https://codeclimate.com/github/nofxx/hooray)
+[![Coverage Status](https://coveralls.io/repos/nofxx/hooray/badge.png)](https://coveralls.io/r/nofxx/hooray)
+[![Build Status](https://travis-ci.org/nofxx/hooray.png?branch=master)](https://travis-ci.org/nofxx/hooray)
 
 
 
@@ -10,11 +14,6 @@
                                                         /|     ()
                                                         \|
 
-
-[![Gem Version](https://badge.fury.io/rb/hooray.png)](http://badge.fury.io/rb/hooray)
-[![Code Climate](https://codeclimate.com/github/nofxx/hooray.png)](https://codeclimate.com/github/nofxx/hooray)
-[![Coverage Status](https://coveralls.io/repos/nofxx/hooray/badge.png)](https://coveralls.io/r/nofxx/hooray)
-[![Build Status](https://travis-ci.org/nofxx/hooray.png?branch=master)](https://travis-ci.org/nofxx/hooray)
 
 
 Find devices around you. Fast and without hyphens.
