@@ -11,7 +11,6 @@ module Hooray
 
     def initialize(network = nil, *params)
       @scan = {}
-      @bots = []
       config_network network
       config_filters params
     end
@@ -56,7 +55,7 @@ module Hooray
     # Creates a bot per port on IP
     def scan_bot(ip)
       (ports || [nil]).each do |port|
-        @bots << Thread.new do
+        Thread.new do
           if ping_class.new(ip.to_s, port, TIMEOUT).ping?
             @scan[ip] << port
             print '.'
@@ -73,7 +72,7 @@ module Hooray
         @scan[ip] = []
         scan_bot(ip)
       end
-      @bots.each(&:join)
+      Thread.list.reject { |t| t == Thread.current }.each(&:join)
       @scan.reject! { |_k, v| v.empty? }
     end
 
