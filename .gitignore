@@ -6,3 +6,4 @@ pkg
 Gemfile.lock
 *.gem
 *.log
+doc/
