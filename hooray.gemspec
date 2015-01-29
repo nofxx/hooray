@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'thor'
+  s.add_dependency 'psych', '2.0.8'
   s.add_dependency 'paint'
   s.add_dependency 'macaddr'
   s.add_dependency 'net-ping'
