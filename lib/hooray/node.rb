@@ -34,6 +34,7 @@ module Hooray
       ip <=> other.ip
     end
 
+    # The same node must have the same ip and mac
     def eql?(other)
       ip == other.ip || mac == other.mac
     end
